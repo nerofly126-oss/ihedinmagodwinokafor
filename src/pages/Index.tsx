@@ -1,8 +1,12 @@
+import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import defenseImage from "@/assets/defense.jpeg";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site";
+
+// 3D background is non-critical — load it after the page paints.
+const Scene3D = lazy(() => import("@/components/Scene3D"));
 
 const navLinks = [
   { label: "About me", href: "#about" },
@@ -43,7 +47,10 @@ export default function Index() {
   const portfolioLabel = siteConfig.role.replace(/-/g, " ");
 
   return (
-    <div className="min-h-screen bg-black text-zinc-950">
+    <div className="relative min-h-screen text-zinc-950">
+      <Suspense fallback={<div className="pointer-events-none fixed inset-0 -z-10 bg-black" />}>
+        <Scene3D />
+      </Suspense>
       <main>
         <section id="top" className="relative min-h-screen overflow-hidden bg-black">
           <img
@@ -100,7 +107,7 @@ export default function Index() {
           </div>
         </section>
 
-        <section id="about" className="bg-[#f5f4f1] px-5 py-10 text-black sm:px-8 sm:py-12">
+        <section id="about" className="bg-[#f5f4f1]/80 px-5 py-10 text-black backdrop-blur-md sm:px-8 sm:py-12">
           <motion.div
             className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16"
             initial={{ opacity: 0, y: 28 }}
@@ -251,7 +258,7 @@ export default function Index() {
         </section>
 
         <section className="pb-16">
-          <div className="bg-white px-6 py-10 text-black sm:px-8 sm:py-12">
+          <div className="bg-white/80 px-6 py-10 text-black backdrop-blur-md sm:px-8 sm:py-12">
             <motion.div
               className="mx-auto max-w-6xl"
               initial={{ opacity: 0, y: 28 }}
