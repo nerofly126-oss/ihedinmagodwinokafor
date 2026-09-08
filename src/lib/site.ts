@@ -1,5 +1,7 @@
 import peer2learnImage from "@/assets/peer2learn.png";
 import onepadImage from "@/assets/onepad.svg";
+import salveMaisonsImage from "@/assets/salve-maisons.png";
+import pozseImage from "@/assets/pozse.png";
 import vengrydImage from "@/assets/vengryd.jpg";
 
 const trimValue = (value?: string) => value?.trim() ?? "";
@@ -33,6 +35,42 @@ export const siteConfig = {
       "My work sits at the intersection of product thinking, frontend polish, and backend reliability. I care about clear interfaces, predictable systems, and delivery that stays maintainable after launch.",
   },
   projects: [
+    {
+      title: "TessaVault",
+      description:
+        "A secondary cloud storage platform for keeping important files secure, accessible, and backed up.",
+      tags: ["Cloud Storage"],
+      color: "from-primary/10 to-accent/5",
+      repoUrl: "",
+      demoUrl: "https://tessavault.vercel.app/",
+      note: "",
+    },
+    {
+      title: "Pozse",
+      description:
+        "An ecommerce store designed to make browsing and purchasing products simple, fast, and seamless.",
+      tags: ["Ecommerce"],
+      color: "from-primary/10 to-accent/5",
+      image: pozseImage,
+      imageFit: "contain",
+      imageBg: "bg-[#af0808]",
+      repoUrl: "",
+      demoUrl: "https://pozse.com/",
+      note: "",
+    },
+    {
+      title: "Salve Maison",
+      description:
+        "A luxury mobile spa and wellness experience, bringing personalized care directly to clients.",
+      tags: ["Wellness", "Web Design"],
+      color: "from-primary/10 to-accent/5",
+      image: salveMaisonsImage,
+      imageFit: "cover",
+      imageBg: "",
+      repoUrl: "",
+      demoUrl: "https://salvemaisons.online",
+      note: "",
+    },
     {
       title: "Vengryd",
       description:
@@ -74,6 +112,13 @@ export const siteConfig = {
     },
   ],
   experiences: [
+    {
+      role: "Full-Stack Engineer",
+      company: "Pozse",
+      period: "Present",
+      description:
+        "Built the complete Pozse ecommerce platform across web and mobile, connecting the product end-to-end to support real users and scale as the business grows.",
+    },
     {
       role: "Junior Full-Stack Developer Intern",
       company: "IT World",

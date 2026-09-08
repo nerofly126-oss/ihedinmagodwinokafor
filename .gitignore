@@ -17,7 +17,6 @@ dist-ssr
 .workspace/
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -27,4 +26,4 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
-.env*
+config.bat
