@@ -1,6 +1,6 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { Cloud, ExternalLink, FileText, ShieldCheck, Volume2, VolumeX } from "lucide-react";
 import defenseImage from "@/assets/defense.jpeg";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site";
@@ -45,9 +45,40 @@ const frameworks = [
 export default function Index() {
   const firstName = siteConfig.name.split(" ")[0] ?? siteConfig.name;
   const portfolioLabel = siteConfig.role.replace(/-/g, " ");
+  const musicRef = useRef<HTMLAudioElement>(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
+  const toggleMusic = () => {
+    const music = musicRef.current;
+    if (!music) return;
+
+    if (music.paused) {
+      music.volume = 0.12;
+      void music.play().then(() => setIsMusicPlaying(true)).catch(() => setIsMusicPlaying(false));
+      return;
+    }
+
+    music.pause();
+    setIsMusicPlaying(false);
+  };
 
   return (
     <div className="relative min-h-screen text-zinc-950">
+      <audio ref={musicRef} src="/background-music.mp3" loop preload="metadata" />
+      <button
+        type="button"
+        onClick={toggleMusic}
+        aria-pressed={isMusicPlaying}
+        aria-label={isMusicPlaying ? "Pause background music" : "Play background music"}
+        className="fixed bottom-5 right-5 z-30 inline-flex items-center gap-2 border border-white/20 bg-black/70 px-4 py-3 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-white backdrop-blur-md transition-transform hover:-translate-y-0.5 sm:bottom-7 sm:right-7"
+      >
+        {isMusicPlaying ? (
+          <Volume2 className="h-4 w-4" aria-hidden="true" />
+        ) : (
+          <VolumeX className="h-4 w-4" aria-hidden="true" />
+        )}
+        {isMusicPlaying ? "Sound on" : "Play sound"}
+      </button>
       <Suspense fallback={<div className="pointer-events-none fixed inset-0 -z-10 bg-black" />}>
         <Scene3D />
       </Suspense>
@@ -80,12 +111,23 @@ export default function Index() {
                   ))}
                 </nav>
 
-                <a
-                  href="#footer"
-                  className="inline-flex w-fit items-center border border-white/25 bg-black/60 px-5 py-3 text-[0.72rem] font-medium text-white backdrop-blur-sm transition-transform hover:-translate-y-0.5"
-                >
-                  Get in touch
-                </a>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="/Godwin-Okafor-Resume.docx"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex w-fit items-center gap-2 border border-white/25 bg-white/10 px-5 py-3 text-[0.72rem] font-medium text-white backdrop-blur-sm transition-transform hover:-translate-y-0.5"
+                  >
+                    <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                    View résumé
+                  </a>
+                  <a
+                    href="#footer"
+                    className="inline-flex w-fit items-center border border-white/25 bg-black/60 px-5 py-3 text-[0.72rem] font-medium text-white backdrop-blur-sm transition-transform hover:-translate-y-0.5"
+                  >
+                    Get in touch
+                  </a>
+                </div>
               </div>
             </header>
 
@@ -195,7 +237,31 @@ export default function Index() {
                         : `bg-gradient-to-br ${project.color}`
                     }`}
                   >
-                    {project.image ? (
+                    {project.title === "TessaVault" ? (
+                      <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#fb4b4d] via-[#d5222b] to-[#86121b] p-7 text-white sm:p-10">
+                        <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full border border-white/15" />
+                        <div className="absolute -bottom-24 -left-20 h-64 w-64 rounded-full bg-black/10 blur-2xl" />
+                        <div className="relative flex h-full flex-col justify-between">
+                          <div className="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.26em] text-white/75">
+                            <span>TessaVault</span>
+                            <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+                          </div>
+                          <div className="flex items-end justify-between gap-5">
+                            <div>
+                              <div className="flex h-28 w-32 items-center justify-center rounded-3xl border border-white/25 bg-white/15 shadow-2xl backdrop-blur-sm sm:h-32 sm:w-36">
+                                <Cloud className="h-16 w-16 stroke-[1.25]" aria-hidden="true" />
+                              </div>
+                              <p className="mt-4 text-xl font-medium tracking-[-0.04em]">Your backup, secured.</p>
+                            </div>
+                            <div className="w-20 space-y-2 pb-1">
+                              <div className="h-2 rounded-full bg-white/90" />
+                              <div className="h-2 rounded-full bg-white/50" />
+                              <div className="h-2 rounded-full bg-white/25" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : project.image ? (
                       <img
                         src={project.image}
                         alt={project.title}
